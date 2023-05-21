@@ -1,0 +1,16 @@
+{
+  "name": "My twitter.com Back On Esc",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.twitter.com/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
+  "permissions": []
+}
