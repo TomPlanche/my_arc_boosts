@@ -1,23 +1,42 @@
 /**
  * @file content.js
- * @description This file listen for DOM changes on the page and implements the reddit
- * functionality of going back on 'esc' key pressed when not on the 'home' page.
+ * @description I was tired of swiping left on Twitter to go back to the homepage.
+ * So I created this extension to go back to the homepage by pressing the "Escape" key.
+ *
  * @author Tom Planche (https://github.com/tomplanche).
  */
 
-// There are a lot of DOM changes on twitter, this
+// There are a lot of DOM changes on Twitter, this
 // is used to prevent for calling the event listener numerous times.
 let IS_CALLED = false;
 
 /**
+ * @function checkIfCloseButton
+ * @description Looks for the close button on the page and click on it if found.
+ */
+const goBackIfCloseBtn = () => {
+  const closeButton = document.querySelector('[aria-label="Close"]');
+
+  // '!!' is used to convert the value to a boolean.
+  // '!null === true', '!!null = false'.
+  // '!Element = false', '!!Element = true'.
+  !!closeButton && closeButton.click();
+
+  return !!closeButton;
+}
+
+/**
  * @function eventListenerForGoingBack
  * @description Looks for the "Escape" key on keydown event.
- * 
+ *
  * @param event {KeyboardEvent} the 'keydown' event.
  */
 const eventListenerForGoingBack = (event) => {
   if (event.key === "Escape") {
-    window.history.back();
+    // Checks if we're looking at a tweet modal.
+    if (!goBackIfCloseBtn()) {
+      window.history.back();
+    }
   }
 }
 
@@ -60,7 +79,7 @@ function addMutationObserver() {
         });
       });
 
-      observer.observe(document.body, { subtree: true, childList: true });      
+      observer.observe(document.body, { subtree: true, childList: true });
 }
 
 addMutationObserver();
