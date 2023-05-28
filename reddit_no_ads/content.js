@@ -23,6 +23,11 @@ const REVIEW_INTERVAL = 1000; // 1 second.
 // END VARIABLES =======================================================================================  END VARIABLES
 
 // FUNCTIONS ================================================================================================ FUNCTIONS
+
+const customLog = (message) => {
+  console.log(`[reddit_no_ads Arc boost] ${message}`);
+}
+
 /**
  * @function getInfos
  * @description Gets the needed infos from the page.
@@ -185,14 +190,14 @@ const removePost = (id, topic = "ad") => {
   const post = SEEN_POSTS[id];
 
   if (post === undefined) {
-    console.log(`Error: couldn't find bad post ${id}`);
+    customLog(`Error: couldn't find bad post ${id}`);
     return;
   }
 
   // Check if this is the first time that we're removing it.
   // If yes, we'll log it and mark it as removed.
   if (!post.removed) {
-    console.log(`Removed post ${post.id}.`);
+    customLog(`Removed post ${post.id}.`);
 
     post.topic = topic;
     post.removed = true;
@@ -202,7 +207,7 @@ const removePost = (id, topic = "ad") => {
 
   const parentNode = post.ref.parentNode;
   if (!parentNode) {
-    console.log(`Error: couldn't find parent`);
+    customLog(`Error: couldn't find parent`);
     return;
   }
 
@@ -248,7 +253,7 @@ const addMutationObserver = () => {
 
 // MAIN =========================================================================================================  MAIN
 window.onload = () => {
-  console.log("Arc boost for twitter is running.")
+  customLog("Arc boost for twitter is running.")
   getInfos();
   addMutationObserver();
 
